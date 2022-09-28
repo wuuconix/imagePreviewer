@@ -1,5 +1,7 @@
 # Image Viewer
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bba5e439-2e82-4b43-af18-164f23fd3617/deploy-status)](https://app.netlify.com/sites/img-viewer/deploys)
+
 [中文说明](./README-CN.md)
 
 an simple html page simulating browser native image viewer

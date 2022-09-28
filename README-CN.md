@@ -1,5 +1,7 @@
 # Image Viewer
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bba5e439-2e82-4b43-af18-164f23fd3617/deploy-status)](https://app.netlify.com/sites/img-viewer/deploys)
+
 一个简单的html页面，但是模拟了浏览器原生图片查看的行为。
 
 点击试试吧:
