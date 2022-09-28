@@ -1,10 +1,8 @@
 # Image Viewer
 
-[中文说明](./README-CN.md)
+一个简单的html页面，但是模拟了浏览器原生图片查看的行为。
 
-an simple html page simulating browser native image viewer
-
-click and try:
+点击试试吧:
 
 <div style="display: grid; grid-template-columns: repeat(2, minmax(auto, 200px)); gap: 20px; align-self: center;">
     <a href="https://img-viewer.netlify.app/#https://i.pixiv.re/img-original/img/2022/05/14/02/00/17/98325199_p0.png" title="https://img-viewer.netlify.app/#https://i.pixiv.re/img-original/img/2022/05/14/02/00/17/98325199_p0.png">
@@ -15,6 +13,6 @@ click and try:
     </a>
 </div>
 
-the site will get the img src from the hash in the url you request.
+页面会从你请求的url的hash中得到图片的src
 
-format: `https://img-viewer.netlify.app/#${img-src}`
+格式: `https://img-viewer.netlify.app/#${img-src}`
