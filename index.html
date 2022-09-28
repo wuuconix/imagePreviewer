@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Image Viewer - Wuuconix</title>
+</head>
+<body>
+  <img class="hr vt normal" src="">
+</body>
+</html>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+}
+body {
+  background: #0e0e0e;
+}
+.normal.normal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  max-width: 100%;
+  max-height: 100%;
+}
+.vt {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-height: 100%;
+}
+.hr {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 100%;
+}
+</style>
+
+<script>
+const img = document.querySelector("img")
+initImgSrc()
+let naturalWidth, naturalHeight
+img.addEventListener("load", (e) => {
+  naturalWidth = img.naturalWidth
+  naturalHeight = img.naturalHeight
+  changeTitle(naturalWidth, naturalHeight)
+  const isNarrow = narrowerThanWindow()
+  const isShort = shorterThanWindow()
+  if (isNarrow && isShort) {
+    //very small img, just put it in the middle
+    return
+  } else if (!isNarrow && !isShort) {
+    //very wide and tall img
+    img.classList.remove("hr")
+    img.classList.remove("vt")
+    img.style.cursor = "zoom-in"
+  } else if (isNarrow && !isShort) {
+    //narrow img, but tall
+    img.classList.remove("vt")
+    img.style.cursor = "zoom-in"
+  } else if (!isNarrow && isShort) {
+    //wide img, but short
+    img.classList.remove("hr")
+    img.style.cursor = "zoom-in"
+  }
+  img.addEventListener("click", (e) => {
+    if (img.classList.contains("normal")) {
+      const { offsetX, offsetY, pageX, pageY } = e
+      const scaleFactor = img.naturalHeight / img.clientHeight
+      img.classList.remove("normal")
+      img.style.cursor = "zoom-out"
+      let scrollX = offsetX * scaleFactor
+      let scrollY = offsetY * scaleFactor
+      scrollX = scrollX + pageX < img.naturalWidth ? scrollX - pageX : scrollX
+      scrollY = scrollY + pageY < img.naturalHeight ? scrollY - pageY : scrollY
+      window.scrollTo(scrollX, scrollY)
+    } else {
+      img.classList.add("normal")
+      img.style.cursor = "zoom-in"
+    }
+  })  
+})
+
+window.addEventListener("hashchange", () => {
+  location.reload()
+})
+function narrowerThanWindow() {
+  return naturalWidth < document.documentElement.clientWidth
+}
+function shorterThanWindow() {
+  return naturalHeight < document.documentElement.clientHeight
+}
+function debug(obj) {
+  for (key in obj) {
+    console.log(key + ": " + obj[key])
+  }
+}
+function changeTitle(width, height) {
+  const url = new URL(img.src)
+  const title = document.querySelector("title")
+  if (url.pathname == "/") {
+    title.textContent = url.hostname + " (" + width + "x" + height + ")"
+  } else {
+    const filename = url.pathname.split("/").pop()
+    title.textContent = filename + " (" + width + "x" + height + ")"
+  }
+}
+function initImgSrc() {
+  const hash = location.hash
+  if (hash != "") {
+    img.src = hash.slice(1)
+  } else {
+    location.hash = "#https://i.pixiv.re/img-original/img/2022/05/14/02/00/17/98325199_p0.png"
+  }
+}
+</script>
